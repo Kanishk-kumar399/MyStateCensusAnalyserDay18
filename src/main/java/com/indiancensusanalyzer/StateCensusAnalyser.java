@@ -7,8 +7,13 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.stream.StreamSupport;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
+import com.indiancensusanalyzer.CensusAnalyserException.CensusExceptionType;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 public class StateCensusAnalyser 
 {
@@ -28,8 +33,24 @@ public class StateCensusAnalyser
 		catch (IOException e) {
 			throw new CensusAnalyserException(CensusAnalyserException.CensusExceptionType.CENSUS_FILE_PROBLEM,"Incorrect File");
 		}
-		 catch (RuntimeException e){
-	            throw new CensusAnalyserException(CensusAnalyserException.CensusExceptionType.INCORRECT_TYPE_ISSUE,"Please enter correct CSV file");
-		 }
+		catch (RuntimeException e) 
+		{
+			if (ExceptionUtils.indexOfType(e, CsvDataTypeMismatchException.class) != -1)
+			{
+				throw new CensusAnalyserException(CensusAnalyserException.CensusExceptionType.INCORRECT_TYPE_ISSUE,"Incorrect Type");
+			} 
+			else if (ExceptionUtils.indexOfType(e, CsvRequiredFieldEmptyException.class) != -1) 
+			{
+				if(e.getMessage().equalsIgnoreCase("Error capturing CSV header")) {
+					throw new CensusAnalyserException(CensusExceptionType.INCORRECT_HEADER,"Incorrect header");
+				}else {
+					throw new CensusAnalyserException(CensusExceptionType.DELIMITER_ISSUE,"Incorrect Delimiter Issue");
+				}
+			} 
+			else {
+				e.printStackTrace();
+				throw new RuntimeException();
+			}
+	}
 	}
 }

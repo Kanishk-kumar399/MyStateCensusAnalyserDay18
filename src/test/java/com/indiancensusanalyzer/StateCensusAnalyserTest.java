@@ -15,6 +15,8 @@ public class StateCensusAnalyserTest
 	public static final String CENSUS_CSV_FILE = "C:\\Users\\Asus\\eclipse-workspace\\IndianStateCensusAnalyser\\src\\main\\resources\\IndiaCSVCensusData.csv";
 	public static final String INCORRECT_FILE = "/users.txt";
 	public static final String INCORRECT_CSV_FILE="C:\\Users\\Asus\\eclipse-workspace\\IndianStateCensusAnalyser\\src\\main\\resources\\AddressBookCSVTest.csv";
+	public static final String WRONGDELIMITER_CENSUS_CSV = "C:\\Users\\Asus\\eclipse-workspace\\IndianStateCensusAnalyser\\src\\main\\resources\\SampleCSVFile_2kb.csv";
+	public static final String INCORRECT_HEADER_CSV="C:\\Users\\Asus\\eclipse-workspace\\IndianStateCensusAnalyser\\src\\main\\resources\\AddressBookCSVTest.csv";
 	@Test
 	public void givenIndiaCensusDataCsvShouldReturnExactCount() {
 		StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
@@ -49,6 +51,28 @@ public class StateCensusAnalyserTest
 			stateCensusAnalyser.loadStateCensusData(INCORRECT_CSV_FILE);
 		}catch(CensusAnalyserException e) {
 			Assert.assertEquals(CensusExceptionType.INCORRECT_TYPE_ISSUE, e.exceptionType);
+		}
+	}
+	@Test
+	public void givenCsvFile_IFDelimiterIsWrong_ShouldThrowExceptionOfDelimiterISSUE() {
+		try {
+			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
+			ExpectedException exceptionRule= ExpectedException.none();
+			exceptionRule.expect(CensusAnalyserException.class);
+			stateCensusAnalyser.loadStateCensusData(WRONGDELIMITER_CENSUS_CSV);
+		}catch(CensusAnalyserException e) {
+			Assert.assertEquals(CensusExceptionType.DELIMITER_ISSUE, e.exceptionType);
+		}
+	}
+	@Test
+	public void givenCsvFile_WrongHeaderShouldThrowExceptionOfTypeIncorrectHeader() {
+		try {
+			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
+			ExpectedException exceptionRule= ExpectedException.none();
+			exceptionRule.expect(CensusAnalyserException.class);
+			stateCensusAnalyser.loadStateCensusData(INCORRECT_HEADER_CSV);
+		}catch(CensusAnalyserException e) {
+			Assert.assertEquals(CensusExceptionType.INCORRECT_HEADER, e.exceptionType);
 		}
 	}
 }
