@@ -15,7 +15,7 @@ public class StateCensusAnalyser
 {
 	public int loadStateCensusData(String csvfilePath) throws CensusAnalyserException {
 		try {	
-		Reader reader;
+			Reader reader;
 			reader = Files.newBufferedReader(Paths.get(csvfilePath));
 			CsvToBeanBuilder<CSVStateCensus> csvToBeanBuilder = new CsvToBeanBuilder<>(reader);
 			csvToBeanBuilder.withType(CSVStateCensus.class);
