@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.stream.StreamSupport;
 
-import com.indiancensusanalyzer.CensusAnalyserException.CensusExceptionType;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
@@ -27,7 +26,10 @@ public class StateCensusAnalyser
 			return numberOfEntries;
 		} 
 		catch (IOException e) {
-			throw new CensusAnalyserException(CensusExceptionType.CENSUS_FILE_PROBLEM,"Incorrect CSV FILE");
+			throw new CensusAnalyserException(CensusAnalyserException.CensusExceptionType.CENSUS_FILE_PROBLEM,"Incorrect File");
 		}
+		 catch (RuntimeException e){
+	            throw new CensusAnalyserException(CensusAnalyserException.CensusExceptionType.INCORRECT_TYPE_ISSUE,"Please enter correct CSV file");
+		 }
 	}
 }
