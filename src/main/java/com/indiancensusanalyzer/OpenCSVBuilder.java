@@ -11,7 +11,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
-public class OpenCSVBuilder
+public class OpenCSVBuilder implements ICSVBuilder
 {
 	public<T> Iterator<T> getIteratorCSV(Reader reader, Class<T> CSVclass) throws CensusAnalyserException 
 	{
