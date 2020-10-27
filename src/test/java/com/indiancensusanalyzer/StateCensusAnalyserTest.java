@@ -1,7 +1,7 @@
 package com.indiancensusanalyzer;
 
 import java.io.IOException;
-
+import com.newcsvhandler.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -17,7 +17,7 @@ public class StateCensusAnalyserTest
 	public static final String INCORRECTSTATE_FILE = "/users.txt";
 	public static final String INCORRECTSTATE_CSV_FILE="C:\\Users\\Asus\\eclipse-workspace\\IndianStateCensusAnalyser\\src\\main\\resources\\AddressBookCSVTest.csv";
 	public static final String WRONGDELIMITERSTATE_CENSUS_CSV = "C:\\Users\\Asus\\eclipse-workspace\\IndianStateCensusAnalyser\\src\\main\\resources\\SampleCSVFile_2kb.csv";
-	public static final String INCORRECTSTATE_HEADER_CSV="";
+	public static final String INCORRECTSTATE_HEADER_CSV="C:\\\\Users\\\\Asus\\\\eclipse-workspace\\\\IndianStateCensusAnalyser\\\\src\\\\main\\\\resources\\\\SampleCSVFile_2kb.csv";
 	@Test
 	public void givenIndiaCensusDataCsvShouldReturnExactCount() {
 		StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
