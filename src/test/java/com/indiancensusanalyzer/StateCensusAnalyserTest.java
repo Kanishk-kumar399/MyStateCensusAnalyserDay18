@@ -1,14 +1,10 @@
 package com.indiancensusanalyzer;
 
-import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import com.indiancensusanalyzer.CensusAnalyserException.CensusExceptionType;
 
 public class StateCensusAnalyserTest 
 {
@@ -29,7 +25,7 @@ public class StateCensusAnalyserTest
 			int numberOfEntries = stateCensusAnalyser.loadStateCensusData(CENSUS_CSV_FILE);
 			Assert.assertEquals(5,numberOfEntries);
 			} 
-		catch (CensusAnalyserException e) {
+		catch (CSVBuilderException e) {
 			e.printStackTrace();
 		}
 
@@ -39,12 +35,12 @@ public class StateCensusAnalyserTest
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
-			exceptionRule.expect(CensusAnalyserException.class);
+			exceptionRule.expect(CSVBuilderException.class);
 			stateCensusAnalyser.loadStateCensusData(INCORRECT_FILE);
 		}
-		catch(CensusAnalyserException e) 
+		catch(CSVBuilderException e) 
 		{
-			Assert.assertEquals(CensusExceptionType.CENSUS_FILE_PROBLEM, e.exceptionType);
+			Assert.assertEquals(CSVBuilderException.CSVExceptionType.CENSUS_FILE_PROBLEM, e.exceptionType);
 		}
     }
 	@Test
@@ -52,10 +48,10 @@ public class StateCensusAnalyserTest
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
-			exceptionRule.expect(CensusAnalyserException.class);
+			exceptionRule.expect(CSVBuilderException.class);
 			stateCensusAnalyser.loadStateCensusData(INCORRECT_CSV_FILE);
-		}catch(CensusAnalyserException e) {
-			Assert.assertEquals(CensusExceptionType.INCORRECT_TYPE_ISSUE, e.exceptionType);
+		}catch(CSVBuilderException e) {
+			Assert.assertEquals(CSVBuilderException.CSVExceptionType.INCORRECT_TYPE_ISSUE, e.exceptionType);
 		}
 	}
 	@Test
@@ -63,10 +59,10 @@ public class StateCensusAnalyserTest
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
-			exceptionRule.expect(CensusAnalyserException.class);
+			exceptionRule.expect(CSVBuilderException.class);
 			stateCensusAnalyser.loadStateCensusData(WRONGDELIMITER_CENSUS_CSV);
-		}catch(CensusAnalyserException e) {
-			Assert.assertEquals(CensusExceptionType.DELIMITER_ISSUE, e.exceptionType);
+		}catch(CSVBuilderException e) {
+			Assert.assertEquals(CSVBuilderException.CSVExceptionType.DELIMITER_ISSUE, e.exceptionType);
 		}
 	}
 	@Test
@@ -74,10 +70,10 @@ public class StateCensusAnalyserTest
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
-			exceptionRule.expect(CensusAnalyserException.class);
+			exceptionRule.expect(CSVBuilderException.class);
 			stateCensusAnalyser.loadStateCensusData(INCORRECT_HEADER_CSV);
-		}catch(CensusAnalyserException e) {
-			Assert.assertEquals(CensusExceptionType.INCORRECT_HEADER, e.exceptionType);
+		}catch(CSVBuilderException e) {
+			Assert.assertEquals(CSVBuilderException.CSVExceptionType.INCORRECT_HEADER, e.exceptionType);
 		}
 	}
 	@Test
@@ -87,7 +83,7 @@ public class StateCensusAnalyserTest
 			int numberOfEntries = stateCensusAnalyser.loadIndianStateData(STATE_CSV_FILE);
 			Assert.assertEquals(4,numberOfEntries);
 			} 
-		catch (CensusAnalyserException e) {
+		catch (CSVBuilderException e) {
 			e.printStackTrace();
 		}
 
@@ -98,12 +94,12 @@ public class StateCensusAnalyserTest
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
-			exceptionRule.expect(CensusAnalyserException.class);
+			exceptionRule.expect(CSVBuilderException.class);
 			stateCensusAnalyser.loadIndianStateData(INCORRECT_FILE);
 		}
-		catch(CensusAnalyserException e) 
+		catch(CSVBuilderException e) 
 		{
-			Assert.assertEquals(CensusExceptionType.CENSUS_FILE_PROBLEM, e.exceptionType);
+			Assert.assertEquals(CSVBuilderException.CSVExceptionType.CENSUS_FILE_PROBLEM, e.exceptionType);
 		}
     }
 	@Test
@@ -111,10 +107,10 @@ public class StateCensusAnalyserTest
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
-			exceptionRule.expect(CensusAnalyserException.class);
+			exceptionRule.expect(CSVBuilderException.class);
 			stateCensusAnalyser.loadIndianStateData(INCORRECT_CSV_FILE);
-		}catch(CensusAnalyserException e) {
-			Assert.assertEquals(CensusExceptionType.INCORRECT_TYPE_ISSUE, e.exceptionType);
+		}catch(CSVBuilderException e) {
+			Assert.assertEquals(CSVBuilderException.CSVExceptionType.INCORRECT_TYPE_ISSUE, e.exceptionType);
 		}
 	}
 	@Test
@@ -122,10 +118,10 @@ public class StateCensusAnalyserTest
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
-			exceptionRule.expect(CensusAnalyserException.class);
+			exceptionRule.expect(CSVBuilderException.class);
 			stateCensusAnalyser.loadIndianStateData(WRONGDELIMITER_CENSUS_CSV);
-		}catch(CensusAnalyserException e) {
-			Assert.assertEquals(CensusExceptionType.DELIMITER_ISSUE, e.exceptionType);
+		}catch(CSVBuilderException e) {
+			Assert.assertEquals(CSVBuilderException.CSVExceptionType.DELIMITER_ISSUE, e.exceptionType);
 		}
 	}
 	@Test
@@ -133,10 +129,10 @@ public class StateCensusAnalyserTest
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
-			exceptionRule.expect(CensusAnalyserException.class);
+			exceptionRule.expect(CSVBuilderException.class);
 			stateCensusAnalyser.loadIndianStateData(INCORRECT_HEADER_CSV);
-		}catch(CensusAnalyserException e) {
-			Assert.assertEquals(CensusExceptionType.INCORRECT_HEADER, e.exceptionType);
+		}catch(CSVBuilderException e) {
+			Assert.assertEquals(CSVBuilderException.CSVExceptionType.INCORRECT_HEADER, e.exceptionType);
 		}
 	}
 }

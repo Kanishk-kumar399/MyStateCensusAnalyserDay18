@@ -9,7 +9,7 @@ import java.util.stream.StreamSupport;
 
 public class StateCensusAnalyser 
 {
-	public int loadStateCensusData(String csvfilePath) throws CensusAnalyserException {
+	public int loadStateCensusData(String csvfilePath) throws CSVBuilderException {
 		try {	
 			Reader reader;
 			reader = Files.newBufferedReader(Paths.get(csvfilePath));
@@ -18,10 +18,10 @@ public class StateCensusAnalyser
 			return this.getCountFromCSVIterator(csvStateCensusIterator);
 			} 
 		catch (IOException e) {
-			throw new CensusAnalyserException(CensusAnalyserException.CensusExceptionType.CENSUS_FILE_PROBLEM,"Incorrect File");
+			throw new CSVBuilderException(CSVBuilderException.CSVExceptionType.CENSUS_FILE_PROBLEM,"Incorrect File");
 		}
 	}
-	public int loadIndianStateData(String csvfilePath) throws CensusAnalyserException 
+	public int loadIndianStateData(String csvfilePath) throws CSVBuilderException 
 	{
 		try {	
 			Reader reader;
@@ -31,7 +31,7 @@ public class StateCensusAnalyser
 			return getCountFromCSVIterator(csvStateIterator);
 		} 
 		catch (IOException e) {
-			throw new CensusAnalyserException(CensusAnalyserException.CensusExceptionType.CENSUS_FILE_PROBLEM,"Incorrect File");
+			throw new CSVBuilderException(CSVBuilderException.CSVExceptionType.CENSUS_FILE_PROBLEM,"Incorrect File");
 		}
 	}
 	public <T> int getCountFromCSVIterator(Iterator<T> csvIterator) {
