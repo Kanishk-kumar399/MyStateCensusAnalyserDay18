@@ -129,4 +129,16 @@ public class StateCensusAnalyser
             return sortedJson;
         
     }
+    public String getPopulationDensityWiseSortedCensusData() throws CSVBuilderException 
+    {
+    		if (csvStateCensusList == null || csvStateCensusList.size() == 0) 
+    		{
+                throw new CSVBuilderException(CSVBuilderException.CSVExceptionType.NO_CENSUS_DATA,"Wrong and null file");
+            }
+            Comparator<CSVStateCensus> censusComparator = Comparator.comparing(census -> census.densityPerSqKm);
+            this.sort(censusComparator);
+            String sortedJson = new Gson().toJson(csvStateCensusList);
+            return sortedJson;
+        
+    }
 }

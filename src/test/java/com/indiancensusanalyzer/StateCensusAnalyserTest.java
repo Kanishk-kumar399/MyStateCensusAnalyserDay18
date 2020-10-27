@@ -189,4 +189,17 @@ public class StateCensusAnalyserTest
 	          e.printStackTrace();
 	        }
 	    }
+		@Test
+	    public void givenIndianCensusData_WhenSortedAsDensityPerSqKm_ShouldReturnSortedResult()
+	 	{
+	        try {
+	            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+	            stateCensusAnalyser.loadStateCensusData(CENSUS_CSV_FILE);
+	            String sortedCensusData=stateCensusAnalyser.getPopulationDensityWiseSortedCensusData();
+	            CSVStateCensus[] censusCSV = new Gson().fromJson(sortedCensusData, CSVStateCensus[].class);
+	            Assert.assertEquals("West Bengal",censusCSV[0].stateName);
+	        } catch (CSVBuilderException e) {
+	          e.printStackTrace();
+	        }
+	    }
 }
