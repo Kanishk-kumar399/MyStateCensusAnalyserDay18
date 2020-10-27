@@ -4,6 +4,7 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.StreamSupport;
 
 import com.newcsvhandler.CSVBuilderException;
@@ -17,8 +18,8 @@ public class StateCensusAnalyser
 			Reader reader;
 			reader = Files.newBufferedReader(Paths.get(csvfilePath));
 			ICSVBuilder csvBuilder=CSVBuilderFactory.createCSVBuilder();
-			Iterator<CSVStateCensus> csvStateCensusIterator=csvBuilder.getIteratorCSV(reader,CSVStateCensus.class);
-			return this.getCountFromCSVIterator(csvStateCensusIterator);
+			List<CSVStateCensus> csvStateCensusList=csvBuilder.getCSVFileList(reader,CSVStateCensus.class);
+			return csvStateCensusList.size();
 			} 
 		catch (IOException e) {
 			throw new CSVBuilderException(CSVBuilderException.CSVExceptionType.CENSUS_FILE_PROBLEM,"Incorrect File");
@@ -30,8 +31,8 @@ public class StateCensusAnalyser
 			Reader reader;
 			reader = Files.newBufferedReader(Paths.get(csvfilePath));
 			ICSVBuilder csvBuilder=CSVBuilderFactory.createCSVBuilder();
-			Iterator<CSVStates> csvStateIterator=csvBuilder.getIteratorCSV(reader,CSVStates.class);
-			return getCountFromCSVIterator(csvStateIterator);
+			List<CSVStates> csvStateList=csvBuilder.getCSVFileList(reader,CSVStates.class);
+			return csvStateList.size();
 		} 
 		catch (IOException e) {
 			throw new CSVBuilderException(CSVBuilderException.CSVExceptionType.CENSUS_FILE_PROBLEM,"Incorrect File");
