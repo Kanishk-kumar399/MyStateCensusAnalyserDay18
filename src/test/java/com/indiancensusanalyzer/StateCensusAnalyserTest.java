@@ -1,6 +1,8 @@
 package com.indiancensusanalyzer;
 
 import java.io.IOException;
+
+import com.google.gson.Gson;
 import com.newcsvhandler.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,7 +33,7 @@ public class StateCensusAnalyserTest
 
 	}
 	@Test
-    public void GivenTheStateCensusCsvFile_IfDoesntExist_ShouldThrowCensusAnalyserException() throws IOException {
+    public void GivenTheStateCensusCsvFile_IfDoesntExist_ShouldThrowCensusAnalyserException() throws CSVBuilderException {
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
@@ -44,7 +46,7 @@ public class StateCensusAnalyserTest
 		}
     }
 	@Test
-	public void givenWrongTypeCSVFile_ShouldThrowExceptionOfType_IncorrectTypeOfCSV() {
+	public void givenWrongTypeCSVFile_ShouldThrowExceptionOfType_IncorrectTypeOfCSV() throws CSVBuilderException {
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
@@ -55,7 +57,7 @@ public class StateCensusAnalyserTest
 		}
 	}
 	@Test
-	public void givenCsvFile_IFDelimiterIsWrong_ShouldThrowExceptionOfDelimiterISSUE() {
+	public void givenCsvFile_IFDelimiterIsWrong_ShouldThrowExceptionOfDelimiterISSUE()  throws CSVBuilderException {
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
@@ -66,7 +68,7 @@ public class StateCensusAnalyserTest
 		}
 	}
 	@Test
-	public void givenCsvFile_WrongHeaderShouldThrowExceptionOfTypeIncorrectHeader() {
+	public void givenCsvFile_WrongHeaderShouldThrowExceptionOfTypeIncorrectHeader() throws CSVBuilderException  {
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
@@ -90,7 +92,7 @@ public class StateCensusAnalyserTest
 	}
 
 	@Test
-    public void GivenTheStateCsvFile_IfDoesntExist_ShouldThrowCensusAnalyserException() throws IOException {
+    public void GivenTheStateCsvFile_IfDoesntExist_ShouldThrowCensusAnalyserException()  throws CSVBuilderException {
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
@@ -103,7 +105,7 @@ public class StateCensusAnalyserTest
 		}
     }
 	@Test
-	public void givenStateWrongTypeCSVFile_ShouldThrowExceptionOfType_IncorrectTypeOfCSV() {
+	public void givenStateWrongTypeCSVFile_ShouldThrowExceptionOfType_IncorrectTypeOfCSV() throws CSVBuilderException  {
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
@@ -114,7 +116,7 @@ public class StateCensusAnalyserTest
 		}
 	}
 	@Test
-	public void givenStateCsvFile_IFDelimiterIsWrong_ShouldThrowExceptionOfDelimiterISSUE() {
+	public void givenStateCsvFile_IFDelimiterIsWrong_ShouldThrowExceptionOfDelimiterISSUE()  throws CSVBuilderException {
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
@@ -125,7 +127,7 @@ public class StateCensusAnalyserTest
 		}
 	}
 	@Test
-	public void givenStateCsvFile_WrongHeaderShouldThrowExceptionOfTypeIncorrectHeader() {
+	public void givenStateCsvFile_WrongHeaderShouldThrowExceptionOfTypeIncorrectHeader() throws CSVBuilderException {
 		try {
 			StateCensusAnalyser stateCensusAnalyser=new StateCensusAnalyser();
 			ExpectedException exceptionRule= ExpectedException.none();
@@ -135,4 +137,17 @@ public class StateCensusAnalyserTest
 			Assert.assertEquals(CSVBuilderException.CSVExceptionType.INCORRECT_HEADER, e.exceptionType);
 		}
 	}
+	 @Test
+	    public void givenIndianCensusData_WhenSortedOnState_ShouldReturnSortedResult() {
+
+	        String sortedCensusData = null;
+	        try {
+	            StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser();
+	            sortedCensusData = stateCensusAnalyser.getStateWiseSortedCensusData(CENSUS_CSV_FILE);
+	            CSVStateCensus[] censusCSV = new Gson().fromJson(sortedCensusData, CSVStateCensus[].class);
+	            Assert.assertEquals("Bihar",censusCSV[0].stateName);
+	        } catch (CSVBuilderException e) {
+	          e.printStackTrace();
+	        }
+	    }
 }
