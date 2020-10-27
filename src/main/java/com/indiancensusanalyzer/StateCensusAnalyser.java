@@ -81,7 +81,7 @@ public class StateCensusAnalyser
 		if (csvStateList == null || csvStateList.size() == 0) {
             throw new CSVBuilderException(CSVBuilderException.CSVExceptionType.NO_CENSUS_DATA,"Wrong and null file");
         }
-        Comparator<CSVStates> censusStateCodeComparator = Comparator.comparing(census -> census.stateName);
+        Comparator<CSVStates> censusStateCodeComparator = Comparator.comparing(census -> census.stateCode);
         this.sortState(censusStateCodeComparator);
         String sortedJson = new Gson().toJson(csvStateList);
         return sortedJson;
@@ -104,5 +104,17 @@ public class StateCensusAnalyser
             }
 
         }
+    }
+    public String getPopulationWiseSortedCensusData() throws CSVBuilderException 
+    {
+    		if (csvStateCensusList == null || csvStateCensusList.size() == 0) 
+    		{
+                throw new CSVBuilderException(CSVBuilderException.CSVExceptionType.NO_CENSUS_DATA,"Wrong and null file");
+            }
+            Comparator<CSVStateCensus> censusComparator = Comparator.comparing(census -> census.population);
+            this.sort(censusComparator);
+            String sortedJson = new Gson().toJson(csvStateCensusList);
+            return sortedJson;
+        
     }
 }
