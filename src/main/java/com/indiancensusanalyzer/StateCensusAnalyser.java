@@ -15,12 +15,13 @@ import com.newcsvhandler.ICSVBuilder;
 
 public class StateCensusAnalyser 
 {
+	List<CSVStateCensus> csvStateCensusList=null;
 	public int loadStateCensusData(String csvfilePath) throws CSVBuilderException{
 		try {	
 			Reader reader;
 			reader = Files.newBufferedReader(Paths.get(csvfilePath));
 			ICSVBuilder csvBuilder=CSVBuilderFactory.createCSVBuilder();
-			List<CSVStateCensus> csvStateCensusList=csvBuilder.getCSVFileList(reader,CSVStateCensus.class);
+			csvStateCensusList=csvBuilder.getCSVFileList(reader,CSVStateCensus.class);
 			return csvStateCensusList.size();
 			} 
 		catch (IOException e) {
@@ -45,31 +46,25 @@ public class StateCensusAnalyser
 		int numberOfEntries = (int) StreamSupport.stream(csvIterable.spliterator(), false).count();
 		return numberOfEntries;
 	}
-	public String getStateWiseSortedCensusData(String csvFilePath) throws CSVBuilderException
+	public String getStateWiseSortedCensusData() throws CSVBuilderException
 	{
-		try {	
-			Reader reader;
-			reader = Files.newBufferedReader(Paths.get(csvFilePath));
-			ICSVBuilder csvBuilder=CSVBuilderFactory.createCSVBuilder();
-			List<CSVStateCensus> csvStateCensusList=csvBuilder.getCSVFileList(reader,CSVStateCensus.class);
+		if (csvStateCensusList == null || csvStateCensusList.size() == 0) {
+            throw new CSVBuilderException(CSVBuilderException.CSVExceptionType.NO_CENSUS_DATA,"Wrong and null file");
+        }
         Comparator<CSVStateCensus> censusComparator = Comparator.comparing(census -> census.stateName);
-        this.sort(csvStateCensusList, censusComparator);
+        this.sort(censusComparator);
         String sortedJson = new Gson().toJson(csvStateCensusList);
         return sortedJson;
-		}
-		catch (IOException e) {
-			throw new CSVBuilderException(CSVBuilderException.CSVExceptionType.CENSUS_FILE_PROBLEM,"Incorrect File");
-		}
     }
 
-    private void sort(List<CSVStateCensus> csvFileList, Comparator<CSVStateCensus> censusComparator) {
-        for (int i = 0; i < csvFileList.size(); i++) {
-            for (int j = 0; j < csvFileList.size() - i - 1; j++) {
-                CSVStateCensus census1 = csvFileList.get(j);
-                CSVStateCensus census2 = csvFileList.get(j + 1);
+    private void sort(Comparator<CSVStateCensus> censusComparator) {
+        for (int i = 0; i < csvStateCensusList.size(); i++) {
+            for (int j = 0; j < csvStateCensusList.size() - i - 1; j++) {
+                CSVStateCensus census1 = csvStateCensusList.get(j);
+                CSVStateCensus census2 = csvStateCensusList.get(j + 1);
                 if (censusComparator.compare(census1, census2) > 0) {
-                    csvFileList.set(j, census2);
-                    csvFileList.set(j + 1, census1);
+                	csvStateCensusList.set(j, census2);
+                	csvStateCensusList.set(j + 1, census1);
                 }
 
             }
